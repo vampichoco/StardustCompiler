@@ -1,0 +1,9 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<print format="int">
+  <add>
+    <constant type="int">2</constant>
+    <assign name="x">
+      <read>Write a number</read>
+    </assign>
+  </add>
+</print>

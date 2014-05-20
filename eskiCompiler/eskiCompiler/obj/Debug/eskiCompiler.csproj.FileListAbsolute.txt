@@ -1,0 +1,10 @@
+c:\users\eski\documents\visual studio 2013\Projects\eskiCompiler\eskiCompiler\bin\Debug\eskiCompiler.exe.config
+c:\users\eski\documents\visual studio 2013\Projects\eskiCompiler\eskiCompiler\bin\Debug\program1.xml
+c:\users\eski\documents\visual studio 2013\Projects\eskiCompiler\eskiCompiler\bin\Debug\eskiCompiler.exe
+c:\users\eski\documents\visual studio 2013\Projects\eskiCompiler\eskiCompiler\bin\Debug\eskiCompiler.pdb
+c:\users\eski\documents\visual studio 2013\Projects\eskiCompiler\eskiCompiler\bin\Debug\Microsoft.Dynamic.dll
+c:\users\eski\documents\visual studio 2013\Projects\eskiCompiler\eskiCompiler\bin\Debug\Microsoft.Scripting.Debugging.dll
+c:\users\eski\documents\visual studio 2013\Projects\eskiCompiler\eskiCompiler\bin\Debug\Microsoft.Scripting.dll
+c:\users\eski\documents\visual studio 2013\Projects\eskiCompiler\eskiCompiler\obj\Debug\eskiCompiler.csprojResolveAssemblyReference.cache
+c:\users\eski\documents\visual studio 2013\Projects\eskiCompiler\eskiCompiler\obj\Debug\eskiCompiler.exe
+c:\users\eski\documents\visual studio 2013\Projects\eskiCompiler\eskiCompiler\obj\Debug\eskiCompiler.pdb
