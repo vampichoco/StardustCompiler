@@ -1,0 +1,15 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+  <if>
+    <condition>
+      <equals>
+        <constant type="int">3</constant>
+        <constant type="int">3</constant>
+      </equals>
+    </condition>
+    <then>
+      <print format="string">
+        <constant type="string">Equals!</constant>
+      </print>
+    </then>
+  </if>
+

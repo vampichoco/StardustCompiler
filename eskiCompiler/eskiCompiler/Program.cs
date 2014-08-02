@@ -9,7 +9,6 @@ using Microsoft.Scripting;
 using System.Xml; 
 using System.Xml.Linq;
 using System.Linq.Expressions;
-
 namespace eskiCompiler
 {
     class Program 
@@ -21,25 +20,20 @@ namespace eskiCompiler
         {
 
             variables = new List<ParameterExpression>();
-
-            XDocument program1 = XDocument.Load("program1.xml");
-
-            var parsedProgram = parse(program1.Root);
-
             List<Expression> exprs = new List<Expression>();
+
+            XDocument program1 = XDocument.Load("diana.xml");
+            var parsedProgram = parse(program1.Root);
 
             exprs.Add(parsedProgram);
 
-                 
-
             var block = Expression.Block(variables, exprs);
-
             Expression<Action> lambda = Expression.Lambda<Action>(block);
 
             lambda.Compile().Invoke();
-            
-            Console.ReadLine();
-            
+
+            Console.ReadLine(); 
+                                
         }
 
         public static Expression parse(XElement input)
@@ -52,49 +46,43 @@ namespace eskiCompiler
             {
                 case "constant":
                     result = ParseConstant(input);
-
                     break;
 
                 case "add":
-
-
                     result = parseAdd(input);
                     break;
 
                 case "subtract":
-
-                    result = parseSubtract(input);
-
+                    result = parseSubtract(input);                    
                     break;
+
                 case "multiply":
-
                     result = parseMultiply(input);
+                     break;
 
-                    break;
                 case "divide":
-
                     result = parseDivide(input);
-
                     break; 
 
                 case "print":
                     result = parsePrint(input);
-
                     break;
 
                 case "read":
-
                     result = parseRead(input);
-
                     break; 
 
                 case "assign":
-
                     result = parseAssign(input);
+                    break; 
 
+                case "equals":
+                    result = parseEquals(input);
                     break;
 
-
+                case "if":
+                    result = parseIfThen(input);
+                    break;
             }
 
             return result;
@@ -102,31 +90,19 @@ namespace eskiCompiler
 
         public static ConstantExpression ParseConstant(XElement input)
         {
-            string type = input.Attribute("type").Value.ToString(); 
+            string typeStr = input.Attribute("type").Value.ToString();
+            Type type = parseType(typeStr);
+            string val = input.Value.ToString();
 
-            if (type == "int")
-            {
-                return Expression.Constant(Convert.ToInt32(input.Value.ToString()), typeof(Int32));
-            }else if (type == "string")
-            {
-                return Expression.Constant(input.Value.ToString(), typeof(string));
-            }
-            else if (type == "bigint")
-            {
-                return Expression.Constant(input.Value.ToString(), typeof(Int64));
-            }
-            else if (type == "single")
-            {
-                return Expression.Constant(input.Value.ToString(), typeof(Single));
-            }else if (type == "dobule")
-            {
-                return Expression.Constant(input.Value.ToString(), typeof(Double));
-            }
+            
 
-            else
-            {
-                return Expression.Constant(Convert.ToInt32(input.Value.ToString()), typeof(Int32));
-            }
+            Type genericClass = typeof(FieldBuilder<>);
+            Type ConstructedClass = genericClass.MakeGenericType(type); 
+
+            dynamic created = Activator.CreateInstance(ConstructedClass);
+
+            return created.GenerateConstant(val);
+     
 
         }
 
@@ -172,43 +148,27 @@ namespace eskiCompiler
 
         public static Expression parsePrint(XElement input)
         {
-            System.Reflection.MethodInfo writeLine;
+            
 
-            string format = input.Attribute("format").Value.ToString();
+            Type type = parseType((string)input.Attribute("format"));
 
-            if (format == "string")
-            {
-                writeLine = typeof(Console).GetMethod("WriteLine", new Type[] { typeof(string) });
-            }
-            else if (format == "int") {
-                writeLine = typeof(Console).GetMethod("WriteLine", new Type[] { typeof(Int32) });
-            }else if (format == "bigint")
-            {
-                writeLine = typeof(Console).GetMethod("WriteLine", new Type[] { typeof(Int64) });
-            }else if (format == "single")
-            {
-                writeLine = typeof(Console).GetMethod("WriteLine", new Type[] { typeof(Single) });
-            }
-            else if (format == "duble")
-            {
-                writeLine = typeof(Console).GetMethod("WriteLine", new Type[] { typeof(double) });
-            }
-            else
-            {
-                writeLine = typeof(Console).GetMethod("WriteLine", new Type[] { typeof(string) });
-            }
+            Type genericClass = typeof(Diana<>);
+            Type ConstructedClass = genericClass.MakeGenericType(type);
 
-            var expr = parse(input.Elements().ToArray()[0]);
+            System.Reflection.MethodInfo writeLine = ConstructedClass.GetMethod("print");
 
-            var wl = Expression.Call(writeLine, expr);
+            var wl = Expression.Call(writeLine, Expression.Constant(input.Value.ToString()));
 
             return wl;
+
         }
 
         public static Expression parseAssign(XElement input)
         {
+            Type type = parseType((string)input.Attribute("type"));
+
             ParameterExpression varExpr =
-                Expression.Parameter(typeof(Int32), input.Attribute("name").Value.ToString());
+                Expression.Parameter(type, input.Attribute("name").Value.ToString());
 
             variables.Add(varExpr);
 
@@ -219,11 +179,68 @@ namespace eskiCompiler
 
         public static Expression parseRead(XElement input)
         {
-            System.Reflection.MethodInfo readLine = typeof(internalMethod).GetMethod("_readLine");
+            Type type = parseType((string)input.Attribute("type"));
+
+            Type genericClass = typeof(Diana<>);
+            Type ConstructedClass = genericClass.MakeGenericType(type);
+
+            System.Reflection.MethodInfo readLine = ConstructedClass.GetMethod("read");
 
             var rl = Expression.Call(readLine, Expression.Constant(input.Value.ToString()));
 
             return rl;
+        }
+
+        public static Type parseType(string input)
+        {
+            Type type;
+            switch (input)
+            {
+                case "int":
+                    type = typeof(int);
+                    break;
+                case "bigint":
+                    type = typeof(Int64);
+                    break;
+                case "single":
+                    type = typeof(Single);
+                    break;
+                case "string":
+                    type = typeof(string);
+                    break;
+                case "boolean":
+                    type = typeof(bool);
+                    break;
+                case "double":
+                    type = typeof(double);
+                    break;
+                default:
+                    type = typeof(int);
+                    break;
+            }
+
+            return type;
+        }
+
+        public static Expression parseEquals(XElement input)
+        {
+            var child = getChildren(input);
+
+            var left = parse(child[0]);
+            var right = parse(child[1]);
+
+            return Expression.Equal(left, right);
+        }
+
+        public static Expression parseIfThen(XElement input)
+        {
+            var test = parse(
+                input.Element("condition").Elements().ToArray()[0]);
+
+            var then = parse(
+                input.Element("then").Elements().ToArray()[0]);
+
+            return Expression.IfThen(test, then);
         }
             
 
@@ -245,13 +262,33 @@ namespace eskiCompiler
 
     }
 
-    class internalMethod
+   
+
+    public class Diana<T>
     {
-        public static Int32 _readLine(string message)
+        public static T read(string message)
         {
             Console.WriteLine(message);
-            return Convert.ToInt32(
-                Console.ReadLine());
+            return (T)Convert.ChangeType(Console.ReadLine(), typeof(T));
+        } 
+
+        public static void print(T message)
+        {
+            Console.WriteLine(message);
+        }
+    }
+
+    public class FieldBuilder<T>
+    {
+        public static ConstantExpression GenerateConstant(string value){
+
+            T _value = (T)Convert.ChangeType(value, typeof(T));
+            return Expression.Constant(_value, typeof(T));
+        }
+
+        public static ParameterExpression GenerateVariable(string name, string value)
+        {
+            return Expression.Parameter(typeof(T), name);
         }
     }
 }
