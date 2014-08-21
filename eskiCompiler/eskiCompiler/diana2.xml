@@ -1,0 +1,21 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<program>
+  <assign name="n">
+    <int>0</int>
+  </assign>
+  <while>
+    <condition>
+      <lessThan>
+        <variable>n</variable>
+        <int>10</int>
+      </lessThan>
+    </condition>
+    <body>
+      <Diana />
+      <increment>
+        <variable>n</variable>
+      </increment>
+    </body>
+  </while>
+  <read>press enter to exit</read>
+</program>

@@ -8,3 +8,16 @@ c:\users\eski\documents\visual studio 2013\Projects\eskiCompiler\eskiCompiler\bi
 c:\users\eski\documents\visual studio 2013\Projects\eskiCompiler\eskiCompiler\obj\Debug\eskiCompiler.csprojResolveAssemblyReference.cache
 c:\users\eski\documents\visual studio 2013\Projects\eskiCompiler\eskiCompiler\obj\Debug\eskiCompiler.exe
 c:\users\eski\documents\visual studio 2013\Projects\eskiCompiler\eskiCompiler\obj\Debug\eskiCompiler.pdb
+C:\Users\Eski\Documents\GitHub\Karem\eskiCompiler\eskiCompiler\bin\Debug\eskiCompiler.exe.config
+C:\Users\Eski\Documents\GitHub\Karem\eskiCompiler\eskiCompiler\obj\Debug\eskiCompiler.exe
+C:\Users\Eski\Documents\GitHub\Karem\eskiCompiler\eskiCompiler\obj\Debug\eskiCompiler.pdb
+C:\Users\Eski\Documents\GitHub\Karem\eskiCompiler\eskiCompiler\bin\Debug\program1.xml
+C:\Users\Eski\Documents\GitHub\Karem\eskiCompiler\eskiCompiler\bin\Debug\eskiCompiler.exe
+C:\Users\Eski\Documents\GitHub\Karem\eskiCompiler\eskiCompiler\bin\Debug\eskiCompiler.pdb
+C:\Users\Eski\Documents\GitHub\Karem\eskiCompiler\eskiCompiler\bin\Debug\Microsoft.Dynamic.dll
+C:\Users\Eski\Documents\GitHub\Karem\eskiCompiler\eskiCompiler\bin\Debug\Microsoft.Scripting.Debugging.dll
+C:\Users\Eski\Documents\GitHub\Karem\eskiCompiler\eskiCompiler\bin\Debug\Microsoft.Scripting.dll
+C:\Users\Eski\Documents\GitHub\Karem\eskiCompiler\eskiCompiler\obj\Debug\eskiCompiler.csprojResolveAssemblyReference.cache
+C:\Users\Eski\Documents\GitHub\Karem\eskiCompiler\eskiCompiler\bin\Debug\action.xml
+C:\Users\Eski\Documents\GitHub\Karem\eskiCompiler\eskiCompiler\bin\Debug\diana.xml
+C:\Users\Eski\Documents\GitHub\Karem\eskiCompiler\eskiCompiler\bin\Debug\diana2.xml

@@ -1,0 +1,5 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<add>
+  <constant type="int">2</constant>
+  <constant type="int">8</constant>
+</add>

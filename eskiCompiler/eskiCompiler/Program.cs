@@ -22,17 +22,23 @@ namespace eskiCompiler
             variables = new List<ParameterExpression>();
             List<Expression> exprs = new List<Expression>();
 
-            XDocument program1 = XDocument.Load("diana.xml");
-            var parsedProgram = parse(program1.Root);
+            XDocument program1 = XDocument.Load("diana2.xml");
+            var blocks = program1.Root.Elements(); 
 
-            exprs.Add(parsedProgram);
+            foreach (XElement item in blocks)
+            {
+                var codeSection = parse(item);
+                exprs.Add(codeSection);
+            }
+                       
 
             var block = Expression.Block(variables, exprs);
             Expression<Action> lambda = Expression.Lambda<Action>(block);
+            //Expression<Func<int>> lambda = Expression.Lambda<Func<int>>(block);
 
             lambda.Compile().Invoke();
 
-            Console.ReadLine(); 
+            Console.ReadLine();
                                 
         }
 
@@ -78,14 +84,59 @@ namespace eskiCompiler
 
                 case "equals":
                     result = parseEquals(input);
+                    break; 
+
+                case "lessThan":
+                    result = parseLessThan(input);
                     break;
 
-                case "if":
+                case "ifThen":
                     result = parseIfThen(input);
+                    break; 
+
+                case "while":
+                    result = parseWhile(input);
                     break;
+
+                case "variable":
+                    result = ParseVariable(input);
+                    break;
+
+                case "increment":
+                    result = parseIncrement(input);
+                    break;
+
+                case "int": 
+                case "string":
+                case "bigin":
+                case "single":
+                case "double":
+                case "boolean":
+                    result = ParseContstantFromName(input);
+                    break; 
+
+                case "diana":
+                case "Diana":
+                case "d":
+                    result = parseDiana(input);
+                break;
             }
 
             return result;
+        }
+
+        
+
+
+        public static Expression parseDiana(XElement input)
+        {
+            Type _type = typeof(Diana<string>);
+            ConstantExpression message = Expression.Constant("amo a Diana<3", typeof(string));
+
+            var wl = _type.GetMethod("print");
+
+            return Expression.Call(wl, message);
+
         }
 
         public static ConstantExpression ParseConstant(XElement input)
@@ -104,6 +155,35 @@ namespace eskiCompiler
             return created.GenerateConstant(val);
      
 
+        }
+
+        public static Expression parseIncrement(XElement input)
+        {
+            var variable = parse(input.Elements().ToArray()[0]);
+            return Expression.PostIncrementAssign(variable);
+        }
+
+        public static ConstantExpression ParseContstantFromName(XElement input)
+        {
+            string typeStr = input.Name.ToString();
+            Type type = parseType(typeStr);
+            string val = input.Value.ToString();
+
+
+            Type genericClass = typeof(FieldBuilder<>);
+            Type ConstructedClass = genericClass.MakeGenericType(type);
+
+            dynamic created = Activator.CreateInstance(ConstructedClass);
+
+            return created.GenerateConstant(val);
+        }
+
+        public static ParameterExpression ParseVariable(XElement input)
+        {
+            string varName = input.Value;
+            ParameterExpression var = variables.Single(v => v.Name == varName);
+
+            return var;
         }
 
         public static Expression parseAdd(XElement input)
@@ -157,7 +237,9 @@ namespace eskiCompiler
 
             System.Reflection.MethodInfo writeLine = ConstructedClass.GetMethod("print");
 
-            var wl = Expression.Call(writeLine, Expression.Constant(input.Value.ToString()));
+            var expr = parse(input.Elements().ToArray()[0]);
+
+            var wl = Expression.Call(writeLine, expr);
 
             return wl;
 
@@ -166,12 +248,16 @@ namespace eskiCompiler
         public static Expression parseAssign(XElement input)
         {
             Type type = parseType((string)input.Attribute("type"));
+            string varName = input.Attribute("name").Value;
 
-            ParameterExpression varExpr =
-                Expression.Parameter(type, input.Attribute("name").Value.ToString());
+            var varExpr = variables.SingleOrDefault(v => v.Name == varName);
 
-            variables.Add(varExpr);
-
+            if (varExpr == null)
+            {
+                varExpr = Expression.Parameter(type, varName);
+                variables.Add(varExpr);
+            }
+            
             var assing = Expression.Assign(varExpr, parse(input.Elements().ToArray()[0]));
 
             return assing;
@@ -234,13 +320,73 @@ namespace eskiCompiler
 
         public static Expression parseIfThen(XElement input)
         {
-            var test = parse(
-                input.Element("condition").Elements().ToArray()[0]);
 
-            var then = parse(
-                input.Element("then").Elements().ToArray()[0]);
+            var xCondition = input.Element("condition").Elements().ToArray()[0];
+
+            var test = parse(xCondition);
+
+            var xThen =
+                input.Element("then");
+
+            var then = Expression.Block(parseBody(xThen).ToList());
 
             return Expression.IfThen(test, then);
+        }
+
+        public static Expression parseLoopCondition(XElement input, LabelTarget breakExpression)
+        {
+
+            var xCondition = input;
+
+            var test = parse(xCondition);
+            var negateTest = Expression.Not(test);           
+
+            var then = Expression.Break(breakExpression);
+
+            return Expression.IfThen(negateTest, then);
+        } 
+
+        public static IEnumerable<Expression> parseBody(XElement input)
+        {
+            List<Expression> exprs = new List<Expression>();
+            foreach (XElement item in input.Elements())
+            {
+                //exprs.Add(parse(item));
+                yield return parse(item);
+            }
+
+            
+        }
+
+        public static Expression parseWhile(XElement input)
+        {
+            var breakExpression = Expression.Label();
+
+            var xCondition = input.Element("condition").Elements().ToArray()[0];
+
+            var test = parseLoopCondition(xCondition, breakExpression);
+
+            var xbody =
+                input.Element("body");
+
+            var body = parseBody(xbody).ToList();
+
+            var block = Expression.Block(test, Expression.Block(body)); 
+
+
+            return Expression.Loop(block, breakExpression);
+        }
+
+        public static Expression parseLessThan(XElement input)
+        {
+            var child = getChildren(input); 
+            
+            var left = parse(child[0]); 
+            var right = parse(child[1]); 
+
+            return Expression.LessThan(left, right);
+
+            
         }
             
 
@@ -262,7 +408,8 @@ namespace eskiCompiler
 
     }
 
-   
+    
+
 
     public class Diana<T>
     {
@@ -280,8 +427,8 @@ namespace eskiCompiler
 
     public class FieldBuilder<T>
     {
-        public static ConstantExpression GenerateConstant(string value){
-
+        public  ConstantExpression GenerateConstant(string value)
+        {
             T _value = (T)Convert.ChangeType(value, typeof(T));
             return Expression.Constant(_value, typeof(T));
         }
