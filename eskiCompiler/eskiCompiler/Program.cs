@@ -106,14 +106,30 @@ namespace eskiCompiler
                     result = parseIncrement(input);
                     break;
 
+                case "invoke":
+                    //result = parseInvoke(input);
+                    break;
+
                 case "int": 
                 case "string":
-                case "bigin":
+                case "bigint":
                 case "single":
                 case "double":
                 case "boolean":
                     result = ParseContstantFromName(input);
                     break; 
+
+                case "xml":
+                    result = parseXml(input);
+                    break;
+
+                case "write":
+                    result = ParseWrite(input);
+                    break;
+
+                case "readFile":
+                    result = parseReadFile(input);
+                    break;
 
                 case "diana":
                 case "Diana":
@@ -122,11 +138,10 @@ namespace eskiCompiler
                 break;
             }
 
+            Console.WriteLine(result.NodeType.ToString() + ": " + result.ToString());
+
             return result;
         }
-
-        
-
 
         public static Expression parseDiana(XElement input)
         {
@@ -137,7 +152,19 @@ namespace eskiCompiler
 
             return Expression.Call(wl, message);
 
-        }
+        } 
+
+        //public static Expression parseInvoke(XElement input)
+        //{
+        //    string varName = input.Value;
+        //    ParameterExpression var = variables.Single(v => v.Name == varName); 
+
+        //    string methodName = (string)input.Attribute("method");
+
+        //    var method = var.Type.GetMember(methodName);
+
+        //    return Expression.Call(method[0], var);
+        //}
 
         public static ConstantExpression ParseConstant(XElement input)
         {
@@ -155,7 +182,7 @@ namespace eskiCompiler
             return created.GenerateConstant(val);
      
 
-        }
+        } 
 
         public static Expression parseIncrement(XElement input)
         {
@@ -226,6 +253,39 @@ namespace eskiCompiler
             return Expression.Divide(left, right);
         }
 
+        public static Expression ParseWrite(XElement input)
+        {
+            Type type = parseType((string)input.Attribute("format"));
+            string path = (string)input.Attribute("path");
+
+            Type genericClass = typeof(FileManager<>);
+            Type constructedClass = genericClass.MakeGenericType(type);
+
+            System.Reflection.MethodInfo writeFile = constructedClass.GetMethod("write");
+
+            var expr = parse(input.Elements().ToArray()[0]);
+
+            var wf = Expression.Call(writeFile, Expression.Constant(path, typeof(string)), expr);
+
+            return wf;
+            
+        } 
+
+        public static Expression parseReadFile(XElement input){
+            Type type = parseType((string)input.Attribute("type")); 
+
+            Type genericClass = typeof(FileManager<>);
+            Type constructedClass = genericClass.MakeGenericType(type); 
+
+            String pathStr = (string)input.Attribute("path");
+
+            ConstantExpression path = Expression.Constant(pathStr, typeof(string));
+
+            System.Reflection.MethodInfo readFile = constructedClass.GetMethod("read"); 
+
+            return Expression.Call(readFile, path);
+        }
+
         public static Expression parsePrint(XElement input)
         {
             
@@ -262,6 +322,14 @@ namespace eskiCompiler
 
             return assing;
         }
+
+        //public static Expression parseConvert(XElement input)
+        //{
+
+        //    Type from = parseType((string)input.Attribute("from"));
+        //    Type to = parseType((string)input.Attribute("from"));
+
+        //}
 
         public static Expression parseRead(XElement input)
         {
@@ -300,6 +368,9 @@ namespace eskiCompiler
                 case "double":
                     type = typeof(double);
                     break;
+                case "xml":
+                    type = typeof(XElement);
+                    break;
                 default:
                     type = typeof(int);
                     break;
@@ -316,6 +387,35 @@ namespace eskiCompiler
             var right = parse(child[1]);
 
             return Expression.Equal(left, right);
+        }
+
+        public static Expression parseAnd(XElement input)
+        {
+            var child = getChildren(input);
+
+            var left = parse(child[0]);
+            var right = parse(child[1]);
+
+            return Expression.And(left, right);
+        }
+
+        public static Expression parseOr(XElement input)
+        {
+            var child = getChildren(input);
+
+            var left = parse(child[0]);
+            var right = parse(child[1]);
+
+            return Expression.Or(left, right);
+        }
+
+        public static Expression parseNot(XElement input)
+        {
+
+            var item = input.Elements().ToArray()[0];
+            var parsed = parse(item);
+
+            return Expression.Not(parsed);
         }
 
         public static Expression parseIfThen(XElement input)
@@ -387,8 +487,7 @@ namespace eskiCompiler
             return Expression.LessThan(left, right);
 
             
-        }
-            
+        }            
 
         public static XElement[] getChildren(XElement input)
         {
@@ -405,6 +504,13 @@ namespace eskiCompiler
             
         }
 
+        public static ConstantExpression parseXml(XElement input)
+        {
+            XElement xml = input.Elements().ToArray()[0]; 
+            return Expression.Constant(xml, typeof(XElement));
+        }
+
+        
 
     }
 
@@ -415,12 +521,19 @@ namespace eskiCompiler
     {
         public static T read(string message)
         {
+            Console.ForegroundColor = ConsoleColor.Magenta;
+            Console.Write("cf?>");
+            Console.ForegroundColor = ConsoleColor.Gray;
             Console.WriteLine(message);
+            
             return (T)Convert.ChangeType(Console.ReadLine(), typeof(T));
         } 
 
         public static void print(T message)
         {
+            Console.ForegroundColor = ConsoleColor.Magenta;
+            Console.Write("cf >");
+            Console.ForegroundColor = ConsoleColor.Gray;
             Console.WriteLine(message);
         }
     }
@@ -436,6 +549,37 @@ namespace eskiCompiler
         public static ParameterExpression GenerateVariable(string name, string value)
         {
             return Expression.Parameter(typeof(T), name);
+        } 
+
+        
+    }
+
+    public class FieldConverter<T, U>
+    {
+        public static ConstantExpression ConvertType(T input, U output){
+            U _value = (U)Convert.ChangeType(input, typeof(U));
+
+            return Expression.Constant(_value, typeof(U));
+        }
+    }
+
+    public class FileManager<T>
+    {
+        public static void write(string file, T data)
+        {
+            System.IO.StreamWriter writer = new System.IO.StreamWriter(file);
+            writer.Write(data);
+            writer.Close();
+        } 
+
+        public static T read(string file)
+        {
+            System.IO.StreamReader reader = new System.IO.StreamReader(file);
+            string strData = reader.ReadToEnd();
+            reader.Close();
+
+            return (T)Convert.ChangeType(strData, typeof(T));
+
         }
     }
 }

@@ -60,6 +60,10 @@
       </increment>
     </body>
   </while>
+  <assign name="foo" type="string">
+    <string>Hello world</string>
+  </assign>
+  
  
   
 </program>

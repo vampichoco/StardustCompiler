@@ -1,0 +1,17 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<program>
+  <assign name="data" type="xml">
+    <xml>
+      <data>
+        <Diana>in love</Diana>
+        <Victor>In love</Victor>
+      </data>
+    </xml>
+  </assign>
+  <print format="xml">
+    <variable>data</variable>
+  </print>
+  <write format="xml" path="C:\karem\dianaandvic.xml">
+    <variable>data</variable>
+  </write>
+</program>

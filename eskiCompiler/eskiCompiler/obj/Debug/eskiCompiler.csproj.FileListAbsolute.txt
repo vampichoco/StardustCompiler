@@ -21,3 +21,4 @@ C:\Users\Eski\Documents\GitHub\Karem\eskiCompiler\eskiCompiler\obj\Debug\eskiCom
 C:\Users\Eski\Documents\GitHub\Karem\eskiCompiler\eskiCompiler\bin\Debug\action.xml
 C:\Users\Eski\Documents\GitHub\Karem\eskiCompiler\eskiCompiler\bin\Debug\diana.xml
 C:\Users\Eski\Documents\GitHub\Karem\eskiCompiler\eskiCompiler\bin\Debug\diana2.xml
+C:\Users\Eski\Documents\GitHub\Karem\eskiCompiler\eskiCompiler\bin\Debug\xmlTest.xml

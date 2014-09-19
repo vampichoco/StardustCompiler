@@ -17,5 +17,13 @@
       </increment>
     </body>
   </while>
-  <read>press enter to exit</read>
+
+  <assign name="d" type="string">
+    <readFile type="string" path="c:\karem\test.txt" />
+  </assign>
+
+  <print format="string">
+    <variable>d</variable>
+  </print>
+  
 </program>
