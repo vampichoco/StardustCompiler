@@ -279,7 +279,7 @@ namespace eskiCompiler
 
             String pathStr = (string)input.Attribute("path");
 
-            ConstantExpression path = Expression.Constant(pathStr, typeof(string));
+            Expression path = parse(input.Element("path").Elements().ToArray()[0]);
 
             System.Reflection.MethodInfo readFile = constructedClass.GetMethod("read"); 
 

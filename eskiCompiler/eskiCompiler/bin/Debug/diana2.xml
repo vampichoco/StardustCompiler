@@ -19,7 +19,11 @@
   </while>
 
   <assign name="d" type="string">
-    <readFile type="string" path="c:\karem\test.txt" />
+    <readFile type="string">
+      <path>
+        <string>c:\karem\test.txt</string>
+      </path>
+    </readFile >
   </assign>
 
   <print format="string">
