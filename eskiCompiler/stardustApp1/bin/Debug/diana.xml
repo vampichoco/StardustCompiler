@@ -1,0 +1,69 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<program>
+  <print format="string">
+    <string>Hola, Diana!</string>
+  </print>
+  <print format="string">
+    <string><![CDATA[Te amo!<3]]></string>
+  </print>
+  <assign name="x">
+    <int>2</int>
+  </assign>
+  <print format="int">
+    <variable>x</variable>
+  </print>
+  <assign name="x">
+    <add>
+      <variable>x</variable>
+      <int>8</int>
+    </add>
+  </assign>
+  <print format="int">
+    <variable>x</variable>
+  </print>
+  <print format="boolean">
+    <lessThan>
+      <int>6</int>
+      <int>5</int>
+    </lessThan>
+  </print>
+  <ifThen>
+    <condition>
+      <equals>
+        <int>2</int>
+        <int>2</int>
+      </equals>
+    </condition>
+    <then>
+      <print format="string">
+        <string>equials</string>
+      </print>
+      <diana />
+    </then>
+  </ifThen>
+  <assign name="n">
+    <int>1</int>
+  </assign>
+  <while>
+    <condition>
+      <lessThan>
+        <variable>n</variable>
+        <int>10</int>
+      </lessThan>
+    </condition>
+    <body>
+      <print format="int">
+        <variable>n</variable>
+      </print>
+      <increment>
+        <variable>n</variable>
+      </increment>
+    </body>
+  </while>
+  <assign name="foo" type="string">
+    <string>Hello world</string>
+  </assign>
+  
+ 
+  
+</program>

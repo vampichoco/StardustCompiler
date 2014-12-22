@@ -1,9 +1,11 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
-# Visual Studio 2013
+# Visual Studio Express 2013 for Windows Desktop
 VisualStudioVersion = 12.0.21005.1
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "eskiCompiler", "eskiCompiler\eskiCompiler.csproj", "{1A223610-C4EF-453F-B9D7-E19F5372E04D}"
+EndProject
+Project("{F184B08F-C81C-45F6-A57F-5ABD9991F28F}") = "stardustApp1", "stardustApp1\stardustApp1.vbproj", "{A75324DF-A239-4121-BCC3-05C1C526243A}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -15,6 +17,10 @@ Global
 		{1A223610-C4EF-453F-B9D7-E19F5372E04D}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{1A223610-C4EF-453F-B9D7-E19F5372E04D}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{1A223610-C4EF-453F-B9D7-E19F5372E04D}.Release|Any CPU.Build.0 = Release|Any CPU
+		{A75324DF-A239-4121-BCC3-05C1C526243A}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{A75324DF-A239-4121-BCC3-05C1C526243A}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{A75324DF-A239-4121-BCC3-05C1C526243A}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{A75324DF-A239-4121-BCC3-05C1C526243A}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
