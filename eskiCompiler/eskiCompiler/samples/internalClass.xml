@@ -1,0 +1,16 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<program>
+  <new name="h">hello</new>
+
+  <assign name="h.hello" type="hello">
+    <readFile type="string">
+      <path>
+        <string>c:\karem\test.txt</string>
+      </path>
+    </readFile>
+  </assign>
+
+  <print format="hello">
+    <variable>h</variable>
+  </print>
+</program>

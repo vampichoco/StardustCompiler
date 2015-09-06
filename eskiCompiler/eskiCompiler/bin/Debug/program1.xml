@@ -1,9 +1,0 @@
-﻿<?xml version="1.0" encoding="utf-8" ?>
-<print format="int">
-  <add>
-    <int>2</int>
-    <assign name="x">
-      <read>Write a number</read>
-    </assign>
-  </add>
-</print>

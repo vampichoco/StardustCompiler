@@ -1,10 +1,10 @@
 ﻿<?xml version="1.0" encoding="utf-8" ?>
 <program>
   <print format="string">
-    <string>Hola, Diana!</string>
+    <string>Hello, World!</string>
   </print>
   <print format="string">
-    <string><![CDATA[Te amo!<3]]></string>
+    <string><![CDATA[Special Chars <3]]></string>
   </print>
   <assign name="x">
     <int>2</int>

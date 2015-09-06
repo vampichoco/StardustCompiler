@@ -1,0 +1,22 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<program>
+  <assign name="n">
+    <int>0</int>
+  </assign>
+  <while>
+    <condition>
+      <lessThan>
+        <variable>n</variable>
+        <int>10</int>
+      </lessThan>
+    </condition>
+    <body>
+      <increment>
+        <variable>n</variable>
+      </increment>
+      <print format="int">
+        <variable>n</variable>
+      </print>
+    </body>
+  </while>
+</program>

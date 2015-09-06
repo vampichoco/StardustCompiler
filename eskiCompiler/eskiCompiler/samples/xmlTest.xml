@@ -3,7 +3,7 @@
   <assign name="data" type="xml">
     <xml>
       <data>
-        <Diana>in love</Diana>
+        <Cin>in love</Cin>
         <Victor>In love</Victor>
       </data>
     </xml>
@@ -11,7 +11,7 @@
   <print format="xml">
     <variable>data</variable>
   </print>
-  <write format="xml" path="C:\karem\dianaandvic.xml">
+  <write format="xml" path="C:\karem\file.xml">
     <variable>data</variable>
   </write>
 </program>

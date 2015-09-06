@@ -1,0 +1,10 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<program>
+  <print format="int">
+    <add>
+      <int>2</int>
+      <int>3</int>
+    </add>
+  </print>
+  <cin />
+</program>

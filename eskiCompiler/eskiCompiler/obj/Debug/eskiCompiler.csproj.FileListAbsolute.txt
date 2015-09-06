@@ -11,7 +11,6 @@ c:\users\eski\documents\visual studio 2013\Projects\eskiCompiler\eskiCompiler\ob
 C:\Users\Eski\Documents\GitHub\Karem\eskiCompiler\eskiCompiler\bin\Debug\eskiCompiler.exe.config
 C:\Users\Eski\Documents\GitHub\Karem\eskiCompiler\eskiCompiler\obj\Debug\eskiCompiler.exe
 C:\Users\Eski\Documents\GitHub\Karem\eskiCompiler\eskiCompiler\obj\Debug\eskiCompiler.pdb
-C:\Users\Eski\Documents\GitHub\Karem\eskiCompiler\eskiCompiler\bin\Debug\program1.xml
 C:\Users\Eski\Documents\GitHub\Karem\eskiCompiler\eskiCompiler\bin\Debug\eskiCompiler.exe
 C:\Users\Eski\Documents\GitHub\Karem\eskiCompiler\eskiCompiler\bin\Debug\eskiCompiler.pdb
 C:\Users\Eski\Documents\GitHub\Karem\eskiCompiler\eskiCompiler\bin\Debug\Microsoft.Dynamic.dll
@@ -19,7 +18,12 @@ C:\Users\Eski\Documents\GitHub\Karem\eskiCompiler\eskiCompiler\bin\Debug\Microso
 C:\Users\Eski\Documents\GitHub\Karem\eskiCompiler\eskiCompiler\bin\Debug\Microsoft.Scripting.dll
 C:\Users\Eski\Documents\GitHub\Karem\eskiCompiler\eskiCompiler\obj\Debug\eskiCompiler.csprojResolveAssemblyReference.cache
 C:\Users\Eski\Documents\GitHub\Karem\eskiCompiler\eskiCompiler\bin\Debug\action.xml
-C:\Users\Eski\Documents\GitHub\Karem\eskiCompiler\eskiCompiler\bin\Debug\diana.xml
-C:\Users\Eski\Documents\GitHub\Karem\eskiCompiler\eskiCompiler\bin\Debug\diana2.xml
-C:\Users\Eski\Documents\GitHub\Karem\eskiCompiler\eskiCompiler\bin\Debug\xmlTest.xml
-C:\Users\Eski\Documents\GitHub\Karem\eskiCompiler\eskiCompiler\bin\Debug\lambda.xml
+C:\Users\Eski\Documents\GitHub\Karem\eskiCompiler\eskiCompiler\bin\Debug\eskiCompiler.exe.manifest
+C:\Users\Eski\Documents\GitHub\Karem\eskiCompiler\eskiCompiler\bin\Debug\eskiCompiler.application
+C:\Users\Eski\Documents\GitHub\Karem\eskiCompiler\eskiCompiler\obj\Debug\eskiCompiler.exe.manifest
+C:\Users\Eski\Documents\GitHub\Karem\eskiCompiler\eskiCompiler\obj\Debug\eskiCompiler.application
+C:\Users\Eski\Documents\GitHub\Karem\eskiCompiler\eskiCompiler\bin\Debug\samples\syntax.xml
+C:\Users\Eski\Documents\GitHub\Karem\eskiCompiler\eskiCompiler\bin\Debug\samples\lambda.xml
+C:\Users\Eski\Documents\GitHub\Karem\eskiCompiler\eskiCompiler\bin\Debug\samples\xmlTest.xml
+C:\Users\Eski\Documents\GitHub\Karem\eskiCompiler\eskiCompiler\bin\Debug\samples\internalClass.xml
+C:\Users\Eski\Documents\GitHub\Karem\eskiCompiler\eskiCompiler\bin\Debug\samples\cin.xml

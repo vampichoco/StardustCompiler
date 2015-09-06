@@ -23,7 +23,7 @@ namespace eskiCompiler
             variables = new List<ParameterExpression>();
             List<Expression> exprs = new List<Expression>();
 
-            XDocument program1 = XDocument.Load("diana2.xml");
+            XDocument program1 = XDocument.Load(@"samples\cin.xml");
             var blocks = program1.Root.Elements();
 
             StardustCompiler compiler = new StardustCompiler();

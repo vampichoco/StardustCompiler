@@ -185,11 +185,9 @@ namespace eskiCompiler
                 case "readFile":
                     result = parseReadFile(input);
                     break;
-
-                case "diana":
-                case "Diana":
-                case "d":
-                    result = parseDiana(input);
+                                    
+                case "cin":
+                    result = parseCin(input);
                     break;
                 case "new":
                     result = parseNew(input);
@@ -201,12 +199,12 @@ namespace eskiCompiler
             return result;
         } // parse 
 
-        public Expression parseDiana(XElement input)
+        public Expression parseCin(XElement input)
         {
-            Type _type = typeof(Diana<string>);
-            ConstantExpression message = Expression.Constant("amo a Diana<3", typeof(string));
+            Type _type = typeof(Console<string>);
+            ConstantExpression message = Expression.Constant("amo a Cin <3", typeof(string));
 
-            var wl = _type.GetMethod("print");
+            var wl = _type.GetMethod("printCin");
 
             return Expression.Call(wl, message);
 
@@ -353,7 +351,7 @@ namespace eskiCompiler
 
             Type type = parseType((string)input.Attribute("format"));
 
-            Type genericClass = typeof(Diana<>);
+            Type genericClass = typeof(Console<>);
             Type ConstructedClass = genericClass.MakeGenericType(type);
 
             System.Reflection.MethodInfo writeLine = ConstructedClass.GetMethod("print");
@@ -417,7 +415,7 @@ namespace eskiCompiler
         {
             Type type = parseType((string)input.Attribute("type"));
 
-            Type genericClass = typeof(Diana<>);
+            Type genericClass = typeof(Console<>);
             Type ConstructedClass = genericClass.MakeGenericType(type);
 
             System.Reflection.MethodInfo readLine = ConstructedClass.GetMethod("read");
@@ -608,13 +606,11 @@ namespace eskiCompiler
         } //parse New
     } // stardust compiler
 
-    public class Diana<T>
+    public class Console<T>
     {
         public static T read(string message)
         {
-            Console.ForegroundColor = ConsoleColor.Magenta;
-            Console.Write("cf?>");
-            Console.ForegroundColor = ConsoleColor.Gray;
+           
             Console.WriteLine(message);
 
             return (T)Convert.ChangeType(Console.ReadLine(), typeof(T));
@@ -622,10 +618,19 @@ namespace eskiCompiler
 
         public static void print(T message)
         {
-            Console.ForegroundColor = ConsoleColor.Magenta;
-            Console.Write("cf >");
-            Console.ForegroundColor = ConsoleColor.Gray;
+           
             Console.WriteLine(message);
+        } 
+
+        public static void printCin(T message)
+        {
+            ConsoleColor prevColor = Console.ForegroundColor;
+
+            Console.ForegroundColor = ConsoleColor.Magenta;
+
+            Console.WriteLine(message);
+
+            Console.ForegroundColor = prevColor;
         }
     }
 
